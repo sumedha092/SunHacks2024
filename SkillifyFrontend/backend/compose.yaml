@@ -1,0 +1,29 @@
+services:
+  handl-dev:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./source:/usr/source/app/source
+      - ./database:/usr/source/app/database
+      - ./library:/usr/source/app/library
+      - ./test:/usr/source/app/test
+      - ./server:/usr/source/app/server
+      - .env.development:/usr/source/app/.env.development
+    environment:
+      NODE_ENV: development
+    ports:
+      - 9229:9229
+      - 6969:6969
+    command: ['npm', 'run', 'start:watch']
+    stdin_open: true
+    tty: true
+  handl-prod:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 6969:6969
+    command: ['npm', 'run', 'start:prod']
